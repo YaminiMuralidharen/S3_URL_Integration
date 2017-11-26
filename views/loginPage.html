@@ -1,0 +1,61 @@
+<!--< !DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Login into dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>     
+     <link rel="stylesheet" href="../css/stylepage.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+ 
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mybar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="#">S3 URL</a>
+    </div>
+    <div class="collapse navbar-collapse" id="mybar">
+      <ul class="nav navbar-nav navbar-right">
+       
+      
+      </ul>
+    </div>
+  
+</nav>
+                     
+  <div class="container "> -->
+
+  <div class="loginbox">
+          
+                                
+                               
+                                    <form name="lform" class="form-signin" ng-submit="vm.login()" role="form">
+                                        <h3 class="form-signin-heading"> Sign in to dashboard</h3>
+                                           <hr class="colorgraph">
+                                       <div class="input-group">
+              <input id="email" type="text" class="form-control" name="email" placeholder="Email" ng-model="vm.email">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
+              <span class="help-block" ng-show="lform.email.$touched && lform.email.$invalid">Please enter your Email id.</span>
+              </div><br/>
+            <div class="input-group">
+              <input id="password" type="password" class="form-control" name="password" placeholder="Password"  ng-model="vm.password">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                  <span  class="help-block" ng-show="lform.password.$dirty && lform.password.$error.required">Password is required</span>
+            </div><br/>
+                      <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary navbar-inverse center-block">Sign in</button>
+                                   
+                                    </form>
+                                       <br/>
+                                <h3> <center> <a href="#/register" class="btn btn-link"> Dont have an account?Register here!!</a>  </center>  </h3>
+                               </div>
+                               <!--  </div>
+                                      
+
+    </body>
+</html> -->
