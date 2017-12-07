@@ -1,5 +1,7 @@
 <h3>Hi {{vm.user.firstName}}!</h3>
 <p>You're logged in!!</p>
+<p>{{vm.apiresponse.id}}</p>
+<p>{{vm.apiresponse.content}}</p>
 <!-- <h3>All registered users:</h3>
 <ul>
     <li ng-repeat="user in vm.allUsers">
@@ -12,28 +14,32 @@
     <div class="input-group">
       <input type="text" ng-model ="vm.textURL" class="form-control" size="50" placeholder="Enter URL to shorten" required>
       <div class="input-group-btn">
-        <button type="button" ng-click="vm.addURL()" class="btn btn-danger">Shorten URL</button>
+        <button type="button" ng-click="vm.shortenURL()" class="btn btn-danger">Shorten URL</button>
       </div>
     </div>
   </form>
-   <table class="table table-hover">
+   <table class="table table-hover table-responsive">
     <thead>
       <tr>
         <th>Long URL</th>
         <th>Short URL</th>
+        <th>edit</th>
+        <th>Delete</th>
+        <th>Share</th>
         </tr>
     </thead>
     <tbody>
       <tr ng-repeat="url in vm.generatedURL">
-        <td>{{url.longURL}}</td>
-        <td>{{url.shortURL}}</td>
-        <td><a class="twitter-share-button"
-  href="https://twitter.com/intent/tweet?text=Hello%20world"
-  data-size="large">
-Tweet</a></td>
-<td> <button type="button" class="btn btn-default btn-sm" ng-click="vm.deleteUrl(url)">
+        <td><a href="{{url.originalURL}}" target="_blank">{{url.originalURL}}</a></td>
+        <td><a ng-href="" ng-click="vm.expandURL(url.shorternedURL)" >{{url.shorternedURL}}</a></td>
+       
+        <td> <button type="button" class="btn btn-default btn-sm" ng-click="vm.editUrl(url)">
+          <span class="glyphicon glyphicon-edit"></span> Edit 
+        </button> </td>
+        <td> <button type="button" class="btn btn-default btn-sm" ng-click="vm.deleteUrl(url)">
           <span class="glyphicon glyphicon-trash"></span> Delete 
         </button> </td>
+         <td><a href="https://twitter.com/share?ref_src=twsrc%5Etf}w" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></td>
       </tr>
 </tbody>
 </table>
@@ -78,27 +84,12 @@ Tweet</a></td>
             </div>
         </form>
     </div> -->
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-
-    <!-- Identify your business so that you can collect the payments. -->
-    <input type="hidden" name="business"
-        value="donations@kcparkfriends.org">
-
-    <!-- Specify a Donate button. -->
-    <input type="hidden" name="cmd" value="_donations">
-
-    <!-- Specify details about the contribution -->
-    <input type="hidden" name="item_name" value="Friends of the Park">
-    <input type="hidden" name="item_number" value="Fall Cleanup Campaign">
-    <input type="hidden" name="amount" value="25.00">
-    <input type="hidden" name="currency_code" value="USD">
-
-    <!-- Display the payment button. -->
-    <input type="image" name="submit"
-    src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_donate_92x26.png"
-    alt="Donate">
-    <img alt="" width="1" height="1"
-    src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+    <span class="paypalbutton">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="popup" >
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="ZQK682RV26CL6">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
-
 <p><a href="#!/login" class="btn btn-primary">Logout</a></p>
+</span>

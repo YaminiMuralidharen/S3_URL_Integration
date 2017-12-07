@@ -21,7 +21,7 @@
                     $location.path('/home');
                 } else {
                  //   FlashService.Error(response.message);
-                    
+                    $location.path('/developer');
                 }
           //  });
         };

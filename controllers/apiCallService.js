@@ -8,7 +8,7 @@
     apiCallService.$inject = ['$http'];
     function apiCallService($http) {
         var service = {};
-
+        var vm= this;
         service.GetAll = GetAll;
         service.GetById = GetById;
         service.GetByUsername = GetByUsername;
@@ -19,7 +19,7 @@
         return service;
 
         function GetAll() {
-            return $http.get('/api/users').then(handleSuccess, handleError('Error getting all users'));
+            return $http.get('http://rest-service.guides.spring.io/greeting').then(handleSuccess, handleError('Error getting all users'));
         }
 
         function GetById(id) {
@@ -45,7 +45,7 @@
         // private functions
 
         function handleSuccess(res) {
-            return res.data;
+            vm.apiresponse= res.data;
         }
 
         function handleError(error) {

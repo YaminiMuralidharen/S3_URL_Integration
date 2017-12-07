@@ -5,65 +5,143 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$rootScope'];
-    function HomeController($rootScope) {
+    HomeController.$inject = ['$rootScope','$http','$window'];
+    function HomeController($rootScope,$http,$window) {
         var vm = this;
 
-       // vm.user = null;
-        //vm.allUsers = [];
-        //vm.deleteUser = deleteUser;
-        //vm.Add = Add;
-        //vm.Reset= Reset;
-        //vm.Delete=Delete;
-        //vm.Totals=Totals;
-        //vm.Undo=Undo;
+       
         vm.addURL=addURL;
         vm.deleteUrl=deleteUrl;
-       vm.textURL='www.google.com';
-    /*    initController();
-
-        function initController() {
-            loadCurrentUser();
-            loadAllUsers();
+        vm.shortenURL=shortenURL;
+        vm.expandURL=expandURL;
+        vm.editUrl=editUrl;
+        vm.getAllUrl=getAllUrl;
+        vm.generatedURL=[];
+     //   vm.updateURL=updateURL;
+      //  vm.testapicall=testapicall;
+     //  vm.textURL='www.google.com';
+        initController();
+         function initController() {
+           vm.getAllUrl();
+          // vm.generatedURL
         }
-
-        function loadCurrentUser() {
-            UserService.GetByUsername($rootScope.globals.currentUser.username)
-                .then(function (user) {
-                    vm.user = user;
-                });
-        }
-
-        function loadAllUsers() {
-            UserService.GetAll()
-                .then(function (users) {
-                    vm.allUsers = users;
-                });
-        }
-
-        function deleteUser(id) {
-            UserService.Delete(id)
-            .then(function () {
-                loadAllUsers();
-            });
-        }
-
-         vm.history = [];
-        // Default data (can be loaded from a database)
-        vm.records = [
-            { state: 'CA', price: 22, tax: 5, include: false },
-            { state: 'MA', price: 32, tax: 8, include: false }
-        ];*/
-        vm.generatedURL =[
-            {longURL:'www.google.com',shortURL:'adsjckk'},
-            {longURL:'www.twitter.com',shortURL:'bsdfsfs'},
-            {longURL:'www.facebook.com',shortURL:'ajjjlds'},
+     function shortenURL() {
+       var urldata ={
+        oURL:vm.textURL
+       }
+       console.log(urldata);
+       var username="yamini";
+      var post = {
+          method: 'POST',
+           url: 'http://localhost:8080/api/v1/url/shorten',
+          headers: {
             
-        ];
+            'X-Forwarded-User': username
+          },
+          data:{   oURL:vm.textURL     }
+        } 
+
+       //$http.post('http://localhost:8080/api/v1/url/shorten', JSON.stringify(urldata)).then(function(res) {
+       $http(post).then(function(res) {
+        console.log(res);
+           vm.apiresponse= res.data;
+          // addURL(res.data);
+           vm.generatedURL.push({
+                originalURL : vm.apiresponse.originalURL,
+                shorternedURL :vm.apiresponse.shorternedURL
+            });
+           console.log(vm.apiresponse.originalURL);
+           console.log(vm.apiresponse.shorternedURL);
+           vm.textURL='';
+        });
+   }
+
+   function expandURL(shorturl) {
+    console.log("inside expand url");
+    console.log(shorturl);
+    var username="yamini"
+    var getoriginalurl= {
+                    method: 'GET',
+                    url: 'http://localhost:8080/api/v1/url/' + shorturl,
+                   headers: {
+    
+                     'X-Forwarded-User': username
+                    }, 
+
+                    }
+$http(getoriginalurl).then(function(res) {
+ console.log("inside response of get original");
+  console.log(res.data.originalURL);
+ // $scope.redirectShortUrl = function () {
+        $window.open('https://www.google.com', '_blank');
+  //  };
+});
+
+
+   }
+
+   function editUrl() {
+      console.log("inside edit url");
+       
+
+
+       }
+  
+
+
+  function getAllUrl() {
+         console.log("inside get all url");
+        var username="yamini"
+    var getAll= {
+                    method: 'GET',
+                    url: 'http://localhost:8080/api/v1/urls' ,
+                    headers: {
+    
+                     'X-Forwarded-User': username
+                    },
+
+                    }
+$http(getAll).then(function(res) {
+ console.log("inside response of get all urls")
+  console.log(res.data);
+  //vm.generatedURL=[];
+  vm.allURL= res.data;
+   var genUrlLength=vm.allURL.length;
+   console.log('no of urls' + genUrlLength);
+  console.log('first data');
+  console.log(res.data[0]);
+  for (var i = 0; i < genUrlLength; i++) {
+     vm.generatedURL.push({
+                originalURL : vm.allURL[i].originalURL,
+                shorternedURL :vm.allURL[i].shorternedURL
+            });
+
+        }
+       });
+}
+
+       
+       
          function deleteUrl(item) {
-            // Remove first / oldest element from history if it reaches maximum capacity of 10 records
-           /* if (vm.history.length === 10)
-                vm.history.shift();*/
+           
+                console.log("short url " + item.shorternedURL );
+                console.log(item.originalURL + "  " + item.shorternedURL );
+                var username="yamini";
+                 var deleteRequest = {
+                 method: 'DELETE',
+                 url: 'http://localhost:8080/api/v1/url/' + item.shorternedURL, 
+                 headers: {
+            
+                    'X-Forwarded-User': username
+                    },
+                     
+       }
+        // $http.delete('http://localhost:8080/api/v1/url/' + item.shorternedURL).then(function(res) {
+          $http(deleteRequest).then(function(res) {
+            console.log(res);
+         });
+        
+
              var index = vm.generatedURL.indexOf(item);
             // Add deleted record to historical records
            // vm.history.push(item[index]);
@@ -71,73 +149,36 @@
            
             vm.generatedURL.splice(index, 1);
         };
-        // Total prices
-      /*   function Totals() {
-            var priceTotal = 0;
-            var taxTotal = 0;
-            // Loop through main records and calculate aggregate prices and taxes if include is true
-            angular.forEach(vm.records, function (record) {
-                if (record.include) {
-                    priceTotal += vm.record.price;
-                    taxTotal += vm.record.tax;
-                }
-            });
-            // Return aggregate data
-            return { price: priceTotal , tax: taxTotal };
-        };
-        // Delete data
-        function Delete(item) {
-            // Remove first / oldest element from history if it reaches maximum capacity of 10 records
-            if (vm.history.length === 10)
-                vm.history.shift();
-             var index = vm.records.indexOf(item);
-            // Add deleted record to historical records
-            vm.history.push(item[index]);
-            // Remove from main records (using index)
-           
-            vm.records.splice(index, 1);
-        };*/
-         
-        // Reset new data model
-  /*    function Reset() {
-            vm.newState = '';
-            vm.newPrice = 0;
-            vm.newTax = 0;
-        }
-       Reset();
-        // Add new data
-       function Add() {
-            // Do nothing if no state is entered (blank)
-            if (!vm.newState)
-                return;
-            // Add to main records
-            vm.records.push({
-                state: vm.newState,
-                price: vm.newPrice,
-                tax: vm.newTax,
-                include: false
-            });
-            // See vm.Reset...
-            Reset();
-        }*/
-        function addURL() {
+
+
+       
+        function addURL(data) {
             console.log(' url' + vm.textURL );
             vm.generatedURL.push({
-                longURL : vm.textURL,
-                shortURL :'testurl'
+                originalURL : data.originalURL,
+                shorternedURL :data.shorternedURL
             });
            vm.textURL ='';
             }
         }
 
+     function testapicall() {
+             $http.get('http://rest-service.guides.spring.io/greeting').then(function(res) {
+           vm.apiresponse= res.data;
+        });
+        }
+
+
+        function handleSuccess(res) {
+            vm.apiresponse= res.data;
+        }
+
+        function handleError(error) {
+            return function () {
+                return { success: false, message: error };
+            };
+        }
         
-        // Undo action (delete)
-        /*  function Undo() {
-            // Add last / most recent historical record to the main records
-            vm.records.push(vm.history[ vm.history.length - 1 ]);
-            // Remove last / most recent historical record
-            vm.history.pop();
-        }*/
-    
+       
 
 })();
