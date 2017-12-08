@@ -1,3 +1,15 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">S3URL</a>
+    </div>
+     <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>  
+    </div>
+</nav>
+
+
 <h3>Hi {{vm.user.firstName}}!</h3>
 <p>You're logged in!!</p>
 <p>{{vm.apiresponse.id}}</p>
@@ -10,9 +22,18 @@
     </li>
 
 </ul> -->
- <form class="form-inline" >
+ <!-- <form class="form-inline" >
     <div class="input-group">
       <input type="text" ng-model ="vm.textURL" class="form-control" size="50" placeholder="Enter URL to shorten" required>
+      <div class="input-group-btn">
+        <button type="button" ng-click="vm.shortenURL()" class="btn btn-warning">Shorten URL</button>
+      </div>
+    </div>
+  </form> -->
+ <!--  <div class="jumbotron text-center"> -->
+   <form class="form-inline text-center">
+    <div class="input-group">
+      <input type="text" ng-model ="vm.textURL" class="form-control required" size="50" placeholder="Enter URL to shorten" >
       <div class="input-group-btn">
         <button type="button" ng-click="vm.shortenURL()" class="btn btn-warning">Shorten URL</button>
       </div>
@@ -42,51 +63,23 @@
         <td> <button type="button" class="btn btn-danger btn-sm" ng-click="vm.deleteUrl(url)">
           <span class="glyphicon glyphicon-trash"></span> Delete 
         </button> </td>
-         <td><a href="https://twitter.com/share?ref_src=twsrc%5Etf}w" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></td>
+        <td><a class="twitter-share-button"
+  href="https://twitter.com/share?ref_src=twsrc%5Etf}w"
+  data-show-count="false"
+  data-size="large"
+  data-text="{{url.shorternedURL}}"
+  data-url="{{url.shorternedURL}}"
+  data-hashtags="Generate your short ,simple url and share it "
+  data-via="S3URL"
+  data-related="twitterapi,twitter">
+Tweet
+</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> </td>
+     
       </tr>
 </tbody>
 </table>
-       <!--  <table>
-            <tr>
-                <th ng-click="type = 'include'; reverse = !reverse">Status</th>
-                <th ng-click="type = 'state'; reverse = !reverse">State</th>
-                <th ng-click="type = 'price'; reverse = !reverse">Price</th>
-                <th ng-click="type = 'tax'; reverse = !reverse">Tax</th>
-                <th>Action</th>
-            </tr>
-            <tr ng-repeat="record in vm.records | orderBy:type:reverse">
-                <td><input type="checkbox" ng-model="record.include"></td>
-                <td>{{record.state | uppercase}}</td>
-                <td>{{record.price | currency}}</td>
-                <td>{{record.tax | currency}}</td>
-                <td><button ng-click="vm.Delete(record)">Delete</button></td>
-            </tr>
-          
-        </table>
-        <button ng-show="history.length > 0" ng-click="vm.Undo()">Undo Delete</button>
-  
-  
-    <div class="add_data">
-        <h1>Add Data</h1>
-        <form ng-submit="vm.Add()">
-            <div class="field">
-                <label for="state">State: </label>
-                <input id="state" type="text" placeholder="State" maxlength="2" ng-model="vm.newState">
-            </div>
-            <div class="field">
-                <label for="price">Price: </label>
-                <input id="price" type="number" placeholder="Price" min="0" ng-model="vm.newPrice">
-            </div>
-            <div class="field">
-                <label for="tax">Tax: </label>
-                <input id="tax" type="number" placeholder="Tax" min="0" ng-model="vm.newTax">
-            </div>
-            <div class="action">
-                <button type="submit">Add</button>
-                <button ng-click="vm.Reset()">Reset</button>
-            </div>
-        </form>
-    </div> -->
+       
     <span class="paypalbutton">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="popup" >
 <input type="hidden" name="cmd" value="_s-xclick">
@@ -94,5 +87,6 @@
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
-<p><a href="#!/login" class="btn btn-primary">Logout</a></p>
+<!-- <p><a href="#!/login" class="btn btn-primary">Logout</a></p> -->
 </span>
+<!-- </div> -->
