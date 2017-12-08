@@ -18,13 +18,12 @@
         vm.getAllUrl=getAllUrl;
         vm.checkUrl=checkUrl;
         vm.generatedURL=[];
-     //   vm.updateURL=updateURL;
-      //  vm.testapicall=testapicall;
-     //  vm.textURL='www.google.com';
+        vm.urlcounter=[];
+ 
         initController();
          function initController() {
            vm.getAllUrl();
-          // vm.generatedURL
+          
         }
      function shortenURL() {
        var urldata ={
@@ -62,19 +61,13 @@
     console.log("inside expand url");
     console.log(fullurl.originalURL + '  ' + fullurl.shorternedURL);
     var username="yamini"
- /*   var getoriginalurl= {
-                    method: 'GET',
-                    url: 'http://localhost:8080/api/v1/url/' + shorturl,
-                 
-
-                    } */
 
 $http({
   method: 'GET',
   url: 'http://localhost:8080/api/v1/url/' + fullurl.shorternedURL,
    headers: {'Content-Type': 'application/json'}
 }).then(function successCallback(response) {
-    // this callback will be called asynchronously
+   
     console.log('success');
     console.log(response);
       console.log('response success status ' + response.status + '  ' + response.statusText + '  ' +response.data); 
@@ -83,8 +76,7 @@ $http({
 
 
   }, function errorCallback(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
+    
     console.log('failure');
      console.log('response failure status ' + response.status + '  jjchcc' + response.statusText  + 'aa  ' + +response.data); 
       //console.log('response failure status ' + response.status); 
@@ -94,17 +86,7 @@ $http({
   });
 }
 
-/*$http(getoriginalurl).then(function(res) {
- console.log("inside response of get original");
-  console.log(res.data.originalURL);
- // $scope.redirectShortUrl = function () {
-        $window.open('https://www.google.com', '_blank');
-  //  };
-}),then(error) { 
 
-console.log(error);
-};
-*/
 
    
 
@@ -193,9 +175,7 @@ $http(getAll).then(function(res) {
         
 
              var index = vm.generatedURL.indexOf(item);
-            // Add deleted record to historical records
-           // vm.history.push(item[index]);
-            // Remove from main records (using index)
+           
            
             vm.generatedURL.splice(index, 1);
         };
@@ -212,12 +192,7 @@ $http(getAll).then(function(res) {
             }
         }
 
-     function testapicall() {
-             $http.get('http://rest-service.guides.spring.io/greeting').then(function(res) {
-           vm.apiresponse= res.data;
-        });
-        }
-
+   
 
         function handleSuccess(res) {
             vm.apiresponse= res.data;
