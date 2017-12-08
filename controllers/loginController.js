@@ -16,7 +16,7 @@
         function login() {
           console.log('inside login ctrl');
          //   AuthenticationService.Login(vm.username, vm.password, function (response) {
-                if (vm.email ==="admin" && vm.password ==="admin") {
+                if (vm.email =="admin" && vm.password =="admin") {
                    // AuthenticationService.SetCredentials(vm.username, vm.password);
                     $location.path('/home');
                 } else {

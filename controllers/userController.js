@@ -16,6 +16,7 @@
         vm.expandURL=expandURL;
         vm.editUrl=editUrl;
         vm.getAllUrl=getAllUrl;
+        vm.checkUrl=checkUrl;
         vm.generatedURL=[];
      //   vm.updateURL=updateURL;
       //  vm.testapicall=testapicall;
@@ -30,6 +31,7 @@
         oURL:vm.textURL
        }
        console.log(urldata);
+    vm.textURL = checkUrl(vm.textURL);
        var username="yamini";
       var post = {
           method: 'POST',
@@ -56,42 +58,90 @@
         });
    }
 
-   function expandURL(shorturl) {
+   function expandURL(fullurl) {
     console.log("inside expand url");
-    console.log(shorturl);
+    console.log(fullurl.originalURL + '  ' + fullurl.shorternedURL);
     var username="yamini"
-    var getoriginalurl= {
+ /*   var getoriginalurl= {
                     method: 'GET',
                     url: 'http://localhost:8080/api/v1/url/' + shorturl,
-                   headers: {
-    
-                     'X-Forwarded-User': username
-                    }, 
+                 
 
-                    }
-$http(getoriginalurl).then(function(res) {
+                    } */
+
+$http({
+  method: 'GET',
+  url: 'http://localhost:8080/api/v1/url/' + fullurl.shorternedURL,
+   headers: {'Content-Type': 'application/json'}
+}).then(function successCallback(response) {
+    // this callback will be called asynchronously
+    console.log('success');
+    console.log(response);
+      console.log('response success status ' + response.status + '  ' + response.statusText + '  ' +response.data); 
+    //   $window.location.href = "http://localhost:8080/api/v1/url/" + shorturl;
+    window.open( "http://localhost:8080/api/v1/url/" +  fullurl.shorternedURL,'_blank');
+
+
+  }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    console.log('failure');
+     console.log('response failure status ' + response.status + '  jjchcc' + response.statusText  + 'aa  ' + +response.data); 
+      //console.log('response failure status ' + response.status); 
+     // $window.location.href = "http://localhost:8080/api/v1/url/" + shorturl;
+     $window.open( "http://localhost:8080/api/v1/url/" +  fullurl.shorternedURL,'_blank');
+
+  });
+}
+
+/*$http(getoriginalurl).then(function(res) {
  console.log("inside response of get original");
   console.log(res.data.originalURL);
  // $scope.redirectShortUrl = function () {
         $window.open('https://www.google.com', '_blank');
   //  };
-});
+}),then(error) { 
 
+console.log(error);
+};
+*/
 
-   }
+   
 
-   function editUrl() {
+   function editUrl(url) {
       console.log("inside edit url");
-       
+      
+       var username="yamini";
+       var updateURL= {
+                    method: 'PUT',
+                    url: 'http://localhost:8080/api/v1/url/shorten/'+ url.shorternedURL ,
+                    headers: {
+    
+                     'X-Forwarded-User': username
+                    },
+                      data: {   oURL:url.originalURL   }
+                    }
+                    $http(updateURL).then(function(res) {
+                     console.log("inside response of edit urls")
+                  console.log(res.data);
+                    });
 
 
        }
   
 
+function checkUrl(url) {
+
+    if((!~url.indexOf("http"))||(!~url.indexOf("https"))) {
+    url = "https://" + url;
+
+  }
+    return url;  
+}
 
   function getAllUrl() {
          console.log("inside get all url");
-        var username="yamini"
+        var username="yamini";
     var getAll= {
                     method: 'GET',
                     url: 'http://localhost:8080/api/v1/urls' ,

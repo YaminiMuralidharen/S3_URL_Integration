@@ -2,9 +2,11 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute'])
+        .module('app', ["ngRoute","xeditable"])
         .config(config)
-       // .run(run);
+        .run(function(editableOptions) {
+  editableOptions.theme = 'bs3';
+});
 
     config.$inject = ['$routeProvider'];
     function config($routeProvider) {
@@ -27,7 +29,7 @@
                 controllerAs: 'vm'
 
             })
-              .when('/employeehome', {
+              .when('/developer', {
                 controller: 'HomeController',
                 templateUrl: 'views/developerDashboard.html',
                 controllerAs: 'vm'
